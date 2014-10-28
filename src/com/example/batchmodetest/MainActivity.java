@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity {
 
 	SensorManager sensorManager;
-
+	boolean accelerometerPresent;
 	TextView textInfo;
 	String strSensor;
 
@@ -74,7 +74,6 @@ public class MainActivity extends ActionBarActivity {
 
 		// --Initializing accelerometer--//
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		boolean accelerometerPresent;
 		Sensor accelerometerSensor;
 		List<Sensor> sensor_TYPE_ACCELEROMETER_List = sensorManager
 				.getSensorList(Sensor.TYPE_ACCELEROMETER);
@@ -118,6 +117,33 @@ public class MainActivity extends ActionBarActivity {
 				.getScatterChartView(this, mDataset, mRenderer);
 		mChartView.repaint();
 		// //////////////////
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		Log.d("CharPlot", "START--onResume()");
+		super.onResume();
+		double[] a = { 0.1, 0.2, 0.3 };
+		List<double[]> aList = new ArrayList<double[]>();
+		for (int i = 0; i < 20; i++) {
+			aList.add(a);
+		}
+		Chart = (LinearLayout) this.findViewById(R.id.chart);
+
+		if (accelerometerPresent) {
+			/*
+			 * Accelerometer usage -- old
+			 * //sensorManager.registerListener(accelerometerListener,
+			 * accelerometerSensor, SensorManager.SENSOR_DELAY_FASTEST);
+			 */
+			Chart.removeAllViews();
+			Chart.addView(GetChart(this, aList), new LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+			Toast.makeText(this, "Register accelerometerListener",
+					Toast.LENGTH_LONG).show();
+			Log.d("CharPlot", "END--onResume()");
+		}
 	}
 
 	public void Draw_acc_Setting(XYSeries mSeries_3Lines[],
@@ -195,6 +221,29 @@ public class MainActivity extends ActionBarActivity {
 			mDataset.addSeries(i, mSeries_3Lines[i]);
 			mRenderer.addSeriesRenderer(i, mRenderer_3Lines[i]);
 		}
+	}
+
+	public View GetChart(Context context, List<double[]> In) {
+		for (int i = 0; i < 3; i++)
+			mSeries_3Lines[i].clear();
+
+		for (int i = 0; i < In.size(); i++) {
+			// add a new data point to the current series
+			mSeries_3Lines[0].add(i, In.get(i)[0]);
+			mSeries_3Lines[1].add(i, In.get(i)[1]);
+			mSeries_3Lines[2].add(i, In.get(i)[2]);
+		}
+		// mSeries_3Lines[0].add(In.size()-1, In.get(In.size()-1).x);
+		// mSeries_3Lines[1].add(In.size()-1, In.get(In.size()-1).y);
+		// mSeries_3Lines[2].add(In.size()-1, In.get(In.size()-1).z);
+		// repaint the chart such as the newly added point to be visible
+		mChartView.repaint();
+
+		// View view = ChartFactory.getScatterChartView(context, mDataset,
+		// mRenderer);
+		View view = ChartFactory.getLineChartView(context, mDataset, mRenderer);
+		Log.d("CharPlot", "GetChar()");
+		return view;
 	}
 
 	@Override
