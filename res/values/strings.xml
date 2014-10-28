@@ -4,5 +4,8 @@
     <string name="app_name">BatchModeTest</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="SensorInfo">SensorInfo</string>
+    <string name="IsBatch">IsBatch</string>
+    <string name="BatchTime">BatchTime</string>
 
 </resources>

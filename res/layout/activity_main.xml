@@ -1,17 +1,54 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.batchmodetest.MainActivity" >
+    android:fillViewport="true"
+     >
 
-    <TextView
-        android:id="@+id/TextView_accInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+   <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
-</RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/chart2"
+            android:layout_width="fill_parent"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            >
+		    <TextView
+		        android:id="@+id/TextView_SensorInfo"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="24dp"
+		        android:layout_marginTop="99dp"
+		        android:text="@string/SensorInfo" />
+		     <TextView
+		        android:id="@+id/TextView_IsBatch"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="24dp"
+		        android:layout_marginTop="99dp"
+		        android:text="@string/IsBatch" />
+		     <TextView
+		        android:id="@+id/TextView_BatchTime"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="24dp"
+		        android:layout_marginTop="99dp"
+		        android:text="@string/BatchTime" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/chart"
+            android:layout_width="fill_parent"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            >
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
