@@ -37,6 +37,10 @@ public class MainActivity extends ActionBarActivity {
 
 	SensorManager sensorManager;
 	boolean accelerometerPresent;
+	Sensor accelerometerSensor;
+
+	double[] valueAcc3 = new double[3];
+
 	TextView textInfo;
 	String strSensor;
 
@@ -74,7 +78,6 @@ public class MainActivity extends ActionBarActivity {
 
 		// --Initializing accelerometer--//
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		Sensor accelerometerSensor;
 		List<Sensor> sensor_TYPE_ACCELEROMETER_List = sensorManager
 				.getSensorList(Sensor.TYPE_ACCELEROMETER);
 		// ////////////////////////////////
@@ -132,17 +135,69 @@ public class MainActivity extends ActionBarActivity {
 		Chart = (LinearLayout) this.findViewById(R.id.chart);
 
 		if (accelerometerPresent) {
-			/*
-			 * Accelerometer usage -- old
-			 * //sensorManager.registerListener(accelerometerListener,
-			 * accelerometerSensor, SensorManager.SENSOR_DELAY_FASTEST);
-			 */
+			sensorManager.registerListener(accelerometerListener,
+					accelerometerSensor, SensorManager.SENSOR_DELAY_FASTEST);
 			Chart.removeAllViews();
 			Chart.addView(GetChart(this, aList), new LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			Toast.makeText(this, "Register accelerometerListener",
 					Toast.LENGTH_LONG).show();
 			Log.d("CharPlot", "END--onResume()");
+		}
+	}
+
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		Log.d("CharPlot", "START--onStop()");
+		super.onStop();
+
+		if (accelerometerPresent) {
+			sensorManager.unregisterListener(accelerometerListener);
+			Toast.makeText(this, "Unregister accelerometerListener",
+					Toast.LENGTH_LONG).show();
+			// TODO
+
+			Log.d("CharPlot", "END--onStop()");
+		}
+	}
+
+	private SensorEventListener accelerometerListener = new SensorEventListener() {
+
+		@Override
+		public void onAccuracyChanged(Sensor arg0, int arg1) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSensorChanged(SensorEvent event) {
+			// TODO Auto-generated method stub
+			Sensor sensor = event.sensor;
+			if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+				for (int i = 0; i < 3; i++) {
+					valueAcc3[i] = event.values[i];
+				}
+			}
+			Accmain(valueAcc3);
+		}
+	};
+	List<double[]> dumAccList = new ArrayList<double[]>();
+
+	@SuppressWarnings("static-access")
+	private void Accmain(double InVal[]) {
+		double[] dumAcc = new double[3];
+		Log.d("CharPlot", "Accmain");
+		for (int i = 0; i < 3; i++)
+			dumAcc[i] = (double) InVal[i] / sensorManager.GRAVITY_EARTH;
+		dumAccList.add(dumAcc);
+		Chart = (LinearLayout) this.findViewById(R.id.chart);
+		if (dumAccList.size() >= 40) {
+			Log.d("CharPlot", "addView");
+			Chart.removeAllViews();
+			Chart.addView(GetChart(this, dumAccList), new LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+			dumAccList.clear();
 		}
 	}
 
@@ -224,8 +279,9 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	public View GetChart(Context context, List<double[]> In) {
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 3; i++) {
 			mSeries_3Lines[i].clear();
+		}
 
 		for (int i = 0; i < In.size(); i++) {
 			// add a new data point to the current series
@@ -233,9 +289,7 @@ public class MainActivity extends ActionBarActivity {
 			mSeries_3Lines[1].add(i, In.get(i)[1]);
 			mSeries_3Lines[2].add(i, In.get(i)[2]);
 		}
-		// mSeries_3Lines[0].add(In.size()-1, In.get(In.size()-1).x);
-		// mSeries_3Lines[1].add(In.size()-1, In.get(In.size()-1).y);
-		// mSeries_3Lines[2].add(In.size()-1, In.get(In.size()-1).z);
+
 		// repaint the chart such as the newly added point to be visible
 		mChartView.repaint();
 
