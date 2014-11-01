@@ -36,12 +36,14 @@ public class CharBuilderTest {
 	/** The chart view that displays the data. */
 	private GraphicalView mChartView;
 
-	public CharBuilderTest(int SerNum, int RendNum, SeriesSetting SS) {
+	public CharBuilderTest(int SerNum, int RendNum) {
 		SeriesNum = SerNum;
 		RendererNum = RendNum;
 		mCurrentSeries = new XYSeries[SeriesNum];
 		mCurrentRenderer = new XYSeriesRenderer[RendererNum];
+	}
 
+	public void Init(Context context, SeriesSetting SS) {
 		RendererSetting(mRenderer);
 
 		SS.acc_setting(mCurrentSeries, mCurrentRenderer, mRenderer);
@@ -49,11 +51,9 @@ public class CharBuilderTest {
 			mDataset.addSeries(i, mCurrentSeries[i]);
 			mRenderer.addSeriesRenderer(i, mCurrentRenderer[i]);
 		}
-	}
-
-	interface SeriesSetting {
-		void acc_setting(XYSeries series[], XYSeriesRenderer renderer[],
-				XYMultipleSeriesRenderer mRenderer);
+		mChartView = ChartFactory.getScatterChartView(context, mDataset,
+				mRenderer);
+		mChartView.repaint();
 	}
 
 	public void RendererSetting(XYMultipleSeriesRenderer mRenderer) {
