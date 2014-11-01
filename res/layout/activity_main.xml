@@ -12,31 +12,31 @@
 
 
         <LinearLayout
-            android:id="@+id/chart2"
+            android:id="@+id/TextColl"
             android:layout_width="fill_parent"
-            android:layout_height="400dp"
+            android:layout_height="220dp"
             android:orientation="vertical"
             >
 		    <TextView
 		        android:id="@+id/TextView_SensorInfo"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="8dp"
-		        android:layout_marginTop="33dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
 		        android:text="@string/SensorInfo" />
 		     <TextView
 		        android:id="@+id/TextView_IsBatch"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="8dp"
-		        android:layout_marginTop="33dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
 		        android:text="@string/IsBatch" />
 		     <TextView
 		        android:id="@+id/TextView_BatchTime"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="8dp"
-		        android:layout_marginTop="33dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
 		        android:text="@string/BatchTime" />
         </LinearLayout>
 

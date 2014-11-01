@@ -67,7 +67,6 @@ public class MainActivity extends ActionBarActivity {
 	private XYSeriesRenderer mRenderer_3Lines[] = new XYSeriesRenderer[3];
 	/** The chart view that displays the data. */
 	private GraphicalView mChartView;
-	private Intent intent;
 
 	// //////////////////////////////
 

@@ -1636,6 +1636,7 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020033;
     }
     public static final class id {
+        public static final int TextColl=0x7f050041;
         public static final int TextView_BatchTime=0x7f050044;
         public static final int TextView_IsBatch=0x7f050043;
         public static final int TextView_SensorInfo=0x7f050042;
@@ -1658,7 +1659,6 @@ containing a value of this type.
         public static final int beginning=0x7f050012;
         public static final int bottom=0x7f050016;
         public static final int chart=0x7f050045;
-        public static final int chart2=0x7f050041;
         public static final int checkbox=0x7f05002b;
         public static final int collapseActionView=0x7f05000f;
         public static final int decor_content_parent=0x7f050031;
