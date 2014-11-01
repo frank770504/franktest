@@ -49,8 +49,10 @@ public class CharBuilderTest {
 		RendererSetting(mRenderer);
 
 		SS.acc_setting(mCurrentSeries, mCurrentRenderer, mRenderer);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < SeriesNum; i++) {
 			mDataset.addSeries(i, mCurrentSeries[i]);
+		}
+		for (int i = 0; i < RendererNum; i++) {
 			mRenderer.addSeriesRenderer(i, mCurrentRenderer[i]);
 		}
 		mChartView = ChartFactory.getScatterChartView(context, mDataset,
@@ -65,7 +67,7 @@ public class CharBuilderTest {
 		// mRenderer.setBackgroundColor(Color.GRAY);
 		mRenderer.setMarginsColor(Color.LTGRAY);
 		// mRenderer.setShowLabels(false);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < RendererNum; i++) {
 			mRenderer.setXAxisMin(0, i);
 			mRenderer.setXAxisMax(50, i);
 		}
@@ -94,22 +96,17 @@ public class CharBuilderTest {
 	}
 
 	public View GetChart(Context context, List<double[]> In) {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < SeriesNum; i++) {
 			mCurrentSeries[i].clear();
 		}
-
 		for (int i = 0; i < In.size(); i++) {
 			// add a new data point to the current series
-			mCurrentSeries[0].add(i, In.get(i)[0]);
-			mCurrentSeries[1].add(i, In.get(i)[1]);
-			mCurrentSeries[2].add(i, In.get(i)[2]);
+			for (int j = 0; j < SeriesNum; j++)
+				mCurrentSeries[j].add(i, In.get(i)[j]);
 		}
-
 		// repaint the chart such as the newly added point to be visible
 		mChartView.repaint();
 
-		// View view = ChartFactory.getScatterChartView(context, mDataset,
-		// mRenderer);
 		View view = ChartFactory.getLineChartView(context, mDataset, mRenderer);
 		Log.d("CharPlot", "GetChar()");
 		return view;
