@@ -41,6 +41,8 @@ public class CharBuilderTest {
 		RendererNum = RendNum;
 		mCurrentSeries = new XYSeries[SeriesNum];
 		mCurrentRenderer = new XYSeriesRenderer[RendererNum];
+		mDataset = new XYMultipleSeriesDataset();
+		mRenderer = new XYMultipleSeriesRenderer(RendererNum);
 	}
 
 	public void Init(Context context, SeriesSetting SS) {

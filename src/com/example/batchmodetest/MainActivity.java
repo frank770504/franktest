@@ -158,7 +158,7 @@ public class MainActivity extends ActionBarActivity {
 			sensorManager.registerListener(accelerometerListener,
 					accelerometerSensor, SensorManager.SENSOR_DELAY_FASTEST);
 			Chart.removeAllViews();
-			Chart.addView(GetChart(this, aList), new LayoutParams(
+			Chart.addView(ch.GetChart(this, aList), new LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			Toast.makeText(this, "Register accelerometerListener",
 					Toast.LENGTH_LONG).show();
@@ -215,72 +215,10 @@ public class MainActivity extends ActionBarActivity {
 		if (dumAccList.size() >= 40) {
 			Log.d("CharPlot", "addView");
 			Chart.removeAllViews();
-			Chart.addView(GetChart(this, dumAccList), new LayoutParams(
+			Chart.addView(ch.GetChart(this, dumAccList), new LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
 			dumAccList.clear();
 		}
-	}
-
-	public void RendererSetting(XYMultipleSeriesRenderer mRenderer) {
-		// --Chart Related Initial--//
-
-		// set some properties on the main renderer
-		// mRenderer.setBackgroundColor(Color.GRAY);
-		mRenderer.setMarginsColor(Color.LTGRAY);
-		// mRenderer.setShowLabels(false);
-		for (int i = 0; i < 3; i++) {
-			mRenderer.setXAxisMin(0, i);
-			mRenderer.setXAxisMax(50, i);
-		}
-		// mRenderer.setLabelsColor(Color.MAGENTA);
-		mRenderer.setXLabelsColor(Color.BLACK);
-		mRenderer.setYLabelsColor(0, Color.BLACK);
-		mRenderer.setYLabelsColor(1, Color.BLACK);
-		mRenderer.setYLabelsColor(2, Color.BLACK);
-
-		mRenderer.setShowGrid(true);
-		mRenderer.setXLabels(50);
-		mRenderer.setYLabels(20);
-
-		mRenderer.setApplyBackgroundColor(true);
-		mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
-		mRenderer.setAxisTitleTextSize(16);
-		mRenderer.setChartTitleTextSize(20);
-		mRenderer.setLabelsTextSize(18);
-		mRenderer.setLegendTextSize(20);
-		mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
-		mRenderer.setZoomButtonsVisible(true);
-		mRenderer.setPointSize(5);
-
-		mRenderer.setInScroll(true);
-
-		Draw_acc_Setting(mSeries_3Lines, mRenderer_3Lines, mRenderer);
-		for (int i = 0; i < 3; i++) {
-			mDataset.addSeries(i, mSeries_3Lines[i]);
-			mRenderer.addSeriesRenderer(i, mRenderer_3Lines[i]);
-		}
-	}
-
-	public View GetChart(Context context, List<double[]> In) {
-		for (int i = 0; i < 3; i++) {
-			mSeries_3Lines[i].clear();
-		}
-
-		for (int i = 0; i < In.size(); i++) {
-			// add a new data point to the current series
-			mSeries_3Lines[0].add(i, In.get(i)[0]);
-			mSeries_3Lines[1].add(i, In.get(i)[1]);
-			mSeries_3Lines[2].add(i, In.get(i)[2]);
-		}
-
-		// repaint the chart such as the newly added point to be visible
-		mChartView.repaint();
-
-		// View view = ChartFactory.getScatterChartView(context, mDataset,
-		// mRenderer);
-		View view = ChartFactory.getLineChartView(context, mDataset, mRenderer);
-		Log.d("CharPlot", "GetChar()");
-		return view;
 	}
 
 	@Override
